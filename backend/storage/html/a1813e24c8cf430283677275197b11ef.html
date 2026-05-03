@@ -1,0 +1,181 @@
+
+<!doctype html>
+<html lang="ko">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>테스트용입니다</title>
+        <style>
+            :root {
+                --bg: #f1f5f9;
+                --panel: #ffffff;
+                --text: #0f172a;
+                --muted: #64748b;
+                --line: #dbe4f0;
+                --brand: #2563eb;
+            }
+            * { box-sizing: border-box; }
+            body {
+                margin: 0;
+                font-family: "Pretendard", "Noto Sans KR", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+                background: radial-gradient(circle at top right, #dbeafe 0%, var(--bg) 42%, #e2e8f0 100%);
+                color: var(--text);
+            }
+            .shell { max-width: 1200px; margin: 0 auto; padding: 24px 16px 48px; }
+            .title-card {
+                background: linear-gradient(135deg, #0f172a, #1e293b 70%);
+                color: white;
+                border-radius: 20px;
+                padding: 20px 24px;
+                box-shadow: 0 14px 40px rgba(15, 23, 42, 0.25);
+            }
+            .title-card h1 { margin: 0; font-size: 30px; font-weight: 900; letter-spacing: -0.02em; }
+            .title-card p { margin: 8px 0 0; color: #cbd5e1; font-size: 14px; font-weight: 600; }
+            .layout { margin-top: 16px; display: grid; grid-template-columns: 260px minmax(0, 1fr); gap: 16px; align-items: start; }
+            .chapter-nav {
+                position: sticky;
+                top: 16px;
+                background: rgba(255, 255, 255, 0.9);
+                border: 1px solid var(--line);
+                border-radius: 16px;
+                backdrop-filter: blur(6px);
+                padding: 10px;
+            }
+            .chapter-tab {
+                width: 100%;
+                border: 0;
+                background: transparent;
+                text-align: left;
+                border-radius: 10px;
+                padding: 11px 12px;
+                color: #334155;
+                font-size: 13px;
+                font-weight: 800;
+                cursor: pointer;
+                transition: all .2s ease;
+            }
+            .chapter-tab:hover { background: #eff6ff; color: #1e40af; }
+            .chapter-tab.is-active { background: linear-gradient(135deg, #dbeafe, #e0e7ff); color: #1d4ed8; }
+            .chapter-panel { display: none; }
+            .chapter-panel.is-active { display: block; }
+            .content-card {
+                background: var(--panel);
+                border-radius: 18px;
+                border: 1px solid var(--line);
+                box-shadow: 0 14px 30px rgba(15, 23, 42, 0.08);
+                padding: 28px;
+                line-height: 1.84;
+                font-size: 17px;
+            }
+            .content-card h1, .content-card h2, .content-card h3 { line-height: 1.28; margin: 1.2em 0 0.55em; font-weight: 900; letter-spacing: -0.01em; }
+            .content-card h1 { font-size: 34px; }
+            .content-card h2 { font-size: 28px; color: #1e3a8a; }
+            .content-card h3 { font-size: 22px; color: #1d4ed8; }
+            .content-card p { margin: 0.55em 0; }
+            .content-card img {
+                display: block;
+                max-width: 100%;
+                max-height: 680px;
+                margin: 20px auto;
+                border-radius: 16px;
+                background: #f8fafc;
+                object-fit: contain;
+                border: 1px solid #e2e8f0;
+                box-shadow: 0 10px 28px rgba(15, 23, 42, 0.16);
+            }
+            .content-card pre { overflow-x: auto; padding: 16px; border-radius: 12px; background: #0f172a; color: #e2e8f0; }
+            .content-card code { background: #e2e8f0; padding: 2px 6px; border-radius: 6px; font-size: .95em; }
+            .content-card pre code { background: transparent; padding: 0; }
+            .content-card ul, .content-card ol { padding-left: 24px; }
+            .content-card li { margin: 6px 0; }
+            .content-card blockquote { border-left: 4px solid #60a5fa; margin: 20px 0; padding: 8px 16px; background: #eff6ff; border-radius: 0 10px 10px 0; }
+            .content-card table { width: 100%; border-collapse: collapse; margin: 20px 0; }
+            .content-card th, .content-card td { border: 1px solid #cbd5e1; padding: 10px; text-align: left; }
+            .content-card th { background: #f1f5f9; font-weight: 800; }
+            @media (max-width: 960px) {
+                .layout { grid-template-columns: 1fr; }
+                .chapter-nav { position: static; display: flex; gap: 8px; overflow-x: auto; white-space: nowrap; }
+                .chapter-tab { width: auto; min-width: 150px; }
+                .content-card { padding: 20px; font-size: 16px; }
+                .title-card h1 { font-size: 24px; }
+            }
+        </style>
+    </head>
+    <body>
+        <main class="shell">
+            <header class="title-card">
+                <h1>테스트용입니다</h1>
+                <p>MD 자동 생성 뷰어 • 챕터 탭 기반 리더</p>
+            </header>
+            <div class="layout">
+                <nav class="chapter-nav"><button class="chapter-tab is-active" data-target="panel-0" type="button">전체</button></nav>
+                <section><section id="panel-0" class="chapter-panel is-active"><article class="content-card"><pre>##시작은 구글로 시작한다
+
+---
+##구글 아이디로 깃허브 가입
+
+---
+바이브 코딩으로 앱을 만드는 여러 단계
+
+---
+프롬프트 엔지니어링의 &#x27;한 끗&#x27; 차이 
+
+---
+
+데빈 ai를 이용한 코딩과 깃허브 업로드
+
+---
+배포를 위해 버셀 가입
+
+---
+러버블을 이용한 코딩과 배포
+
+---
+상용화를 위한 단계
+
+---
+데이터베이스와 백엔드의 시각화
+
+---
+구글 로그인, 카카오 로그인
+
+---
+도메인 연결
+
+---
+결제를 위한 결제 모듈 연결
+
+---
+토스 페이먼츠
+
+---
+유지 보수를 위한 방법(깃허브 클론, 깃허브 액션)
+
+---
+버셀분석
+
+---
+**SEO(검색 엔진 최적화):**
+
+---
+문의사항
+
+---</pre></article></section></section>
+            </div>
+        </main>
+        <script>
+            const tabs = Array.from(document.querySelectorAll('.chapter-tab'));
+            const panels = Array.from(document.querySelectorAll('.chapter-panel'));
+            tabs.forEach((tab) => {
+                tab.addEventListener('click', () => {
+                    const target = tab.getAttribute('data-target');
+                    tabs.forEach((t) => t.classList.remove('is-active'));
+                    panels.forEach((p) => p.classList.remove('is-active'));
+                    tab.classList.add('is-active');
+                    const panel = document.getElementById(target);
+                    if (panel) panel.classList.add('is-active');
+                });
+            });
+        </script>
+    </body>
+</html>

@@ -7,6 +7,10 @@ class LectureBase(BaseModel):
     description: Optional[str] = None
     category: str  # 'VOD' or 'PDF'
     file_url: str
+    cover_image_url: Optional[str] = None
+    thumbnail_urls: Optional[str] = None
+    md_file_url: Optional[str] = None
+    html_file_url: Optional[str] = None
 
 class LectureCreate(LectureBase):
     pass
@@ -17,3 +21,17 @@ class LectureResponse(LectureBase):
 
     class Config:
         from_attributes = True
+
+class ViewLogRequest(BaseModel):
+    duration: int = 0
+    is_new_view: bool = False
+
+
+class MarkdownUpdateRequest(BaseModel):
+    markdown_content: str
+
+
+class AdminLectureUpdateRequest(BaseModel):
+    title: str
+    description: Optional[str] = None
+    category: str

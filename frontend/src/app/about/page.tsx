@@ -1,168 +1,134 @@
 "use client";
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { useRouter } from 'next/navigation';
-import { Zap, Menu, X, CheckCircle2 } from 'lucide-react';
-
-/**
- * [방법 3] 경로 에러 해결을 위해 Navbar를 파일 내부에 직접 정의
- */
-function Navbar({ onNavigate }: { onNavigate: (path: string) => void }) {
-  const [isScrolled, setIsScrolled] = useState(false);
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-
-  useEffect(() => {
-    const handleScroll = () => setIsScrolled(window.scrollY > 50);
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
-  const navLinks = [
-    { name: '바이브코딩이란?', href: '/about' },
-    { name: '바이브 코딩 도구', href: '/tools' },
-    { name: '강사소개', href: '/instructor' },
-  ];
-
-  return (
-    <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-      isScrolled ? 'bg-black/80 backdrop-blur-md border-b border-white/10 py-4' : 'bg-transparent py-6'
-    }`}>
-      <div className="max-w-7xl mx-auto px-6 flex justify-between items-center">
-        <div 
-          className="text-2xl font-black tracking-tighter cursor-pointer flex items-center gap-2 text-white"
-          onClick={() => onNavigate('/')}
-        >
-          <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center">
-            <Zap size={20} fill="white" />
-          </div>
-          VIBE_EDU
-        </div>
-
-        <div className="hidden md:flex items-center gap-8 text-sm font-bold tracking-tight">
-          {navLinks.map((link) => (
-            <button 
-              key={link.href} 
-              onClick={() => onNavigate(link.href)} 
-              className="text-gray-400 hover:text-white transition-colors"
-            >
-              {link.name}
-            </button>
-          ))}
-          <button 
-            onClick={() => onNavigate('/apply')}
-            className="bg-blue-600 hover:bg-blue-500 px-6 py-2.5 rounded-full text-white transition-all shadow-lg shadow-blue-600/20"
-          >
-            JOIN US
-          </button>
-        </div>
-
-        <button className="md:hidden text-white" onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}>
-          {isMobileMenuOpen ? <X size={28} /> : <Menu size={28} />}
-        </button>
-      </div>
-
-      <AnimatePresence>
-        {isMobileMenuOpen && (
-          <motion.div 
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: 'auto' }}
-            exit={{ opacity: 0, height: 0 }}
-            className="md:hidden bg-black border-b border-white/10 overflow-hidden"
-          >
-            <div className="px-6 py-8 flex flex-col gap-6 text-xl font-bold text-white">
-              {navLinks.map((link) => (
-                <button key={link.href} onClick={() => onNavigate(link.href)} className="text-left">{link.name}</button>
-              ))}
-              <button onClick={() => onNavigate('/apply')} className="text-left text-blue-500 font-black">JOIN US</button>
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </nav>
-  );
-}
+import Navbar from '@/components/Navbar';
+import { Zap, Target, Rocket, Users, Sparkles, X } from 'lucide-react';
 
 export default function AboutPage() {
-  const router = useRouter();
-
-  const handleNavigate = (path: string) => {
-    router.push(path);
-  };
-
+  const [selectedImage, setSelectedImage] = useState<number | null>(null);
   return (
-    <div className="min-h-screen bg-[#050505] text-white selection:bg-blue-500 font-sans overflow-x-hidden">
-      <Navbar onNavigate={handleNavigate} />
-      
-      <main className="max-w-4xl mx-auto pt-48 pb-20 px-6">
-        <motion.div 
-          initial={{ opacity: 0, y: 20 }} 
-          animate={{ opacity: 1, y: 0 }}
-          className="space-y-16"
-        >
-          {/* Module 1: 패러다임의 전환 */}
-          <section className="space-y-8">
-            <h1 className="text-5xl md:text-6xl font-black tracking-tighter text-blue-500 italic">
-              "Why Vibe Coding?"
+    <div className="min-h-screen bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-100 selection:bg-blue-100 dark:selection:bg-blue-900 font-sans">
+      <Navbar />
+
+      <main className="pt-40 pb-24 px-6">
+        <div className="max-w-4xl mx-auto">
+          {/* 히어로 섹션 */}
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }} 
+            animate={{ opacity: 1, y: 0 }}
+            className="text-center mb-24"
+          >
+            <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-blue-50 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 text-xs font-black mb-8 border border-blue-100 dark:border-blue-800">
+              <Zap size={14} /> PHILOSOPHY
+            </span>
+            <h1 className="text-6xl font-black tracking-tighter mb-8 leading-tight dark:text-white">
+              코딩은 기술이 아니라 <br />
+              <span className="text-blue-600 dark:text-blue-400">비즈니스의 언어</span>입니다.
             </h1>
-            <div className="space-y-6 text-gray-300 text-lg leading-relaxed">
-              <p>
-                바이브 코딩은 단순한 기술 스택의 나열이 아닙니다. 
-                <strong>"코드 한 줄"</strong>보다 <strong>"전체적인 느낌(Vibe)과 의도"</strong>를 전달하여 AI와 협업하는 새로운 방식입니다.
-              </p>
-              <div className="p-8 bg-[#111] rounded-[2.5rem] border border-white/5 space-y-4">
-                <h2 className="text-2xl font-bold text-white flex items-center gap-3">
-                  <Zap className="text-blue-500" /> Key Mindset
-                </h2>
-                <p className="italic text-blue-400 text-xl font-medium">
-                  "개발자는 이제 '작가'가 아닌 '감독(Director)'이다."
-                </p>
-                <p className="text-gray-400 leading-relaxed">
-                  구현(Implementation)에 매몰되던 과거에서 벗어나, 의도(Intent) 중심으로 이동하여 
-                  AI가 가장 잘하는 일을 수행하도록 지휘하는 능력이 핵심입니다.
-                </p>
-              </div>
-            </div>
-          </section>
+            <p className="text-slate-500 text-xl font-medium leading-relaxed">
+              우리는 단순히 문법을 가르치지 않습니다. <br />
+              아이디어를 실제 가치로 변환하는 '의도 중심 개발'을 지향합니다.
+            </p>
+          </motion.div>
 
-          {/* Module 3: 바이브를 전달하는 기술 */}
-          <section className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            <div className="space-y-4">
-              <h3 className="text-2xl font-bold text-gray-200">Context Injection</h3>
-              <p className="text-gray-400">
-                단순한 명령이 아닙니다. "이 앱은 Notion 스타일의 협업 툴이야"라고 
-                AI에게 배경을 먼저 설정하여 결과물의 퀄리티를 비약적으로 높입니다.
-              </p>
-            </div>
-            <div className="space-y-4 text-right">
-              <h3 className="text-2xl font-bold text-gray-200">Iterative Refinement</h3>
-              <p className="text-gray-400">
-                한 번에 완성하는 것이 아니라, 지속적인 피드백 루프를 통해 
-                디테일을 다듬어가는 반복적 개선의 미학을 다룹니다.
-              </p>
-            </div>
-          </section>
+          {/* 핵심 가치 */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-32">
+            {[
+              { icon: <Target className="text-blue-600" />, title: "의도 중심 (Intent-First)", desc: "어떻게(How) 짤 것인가보다 무엇(What)을 만들 것인가에 집중합니다." },
+              { icon: <Rocket className="text-blue-600" />, title: "초고속 구현 (Hyper-Growth)", desc: "AI 에이전트를 활용하여 개발 속도를 10배 이상 끌어올립니다." },
+              { icon: <Users className="text-blue-600" />, title: "실전 지향 (Real-World)", desc: "작동하는 코드를 넘어, 수익이 발생하는 상용 서비스를 만듭니다." },
+              { icon: <Sparkles className="text-blue-600" />, title: "한계 돌파 (Breakthrough)", desc: "비전공자도 시스템 아키텍처를 설계할 수 있는 시대를 엽니다." }
+            ].map((v, i) => (
+              <motion.div 
+                key={i}
+                initial={{ opacity: 0, x: i % 2 === 0 ? -20 : 20 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                className="p-10 rounded-[3rem] bg-slate-50 dark:bg-slate-900 border border-slate-100 dark:border-slate-800 hover:bg-white dark:hover:bg-slate-800 hover:shadow-2xl hover:shadow-blue-100 dark:hover:shadow-none transition-all group"
+              >
+                <div className="w-14 h-14 rounded-2xl bg-white dark:bg-slate-800 flex items-center justify-center mb-6 shadow-sm group-hover:scale-110 transition-transform">
+                  {v.icon}
+                </div>
+                <h3 className="text-2xl font-black mb-4 dark:text-white">{v.title}</h3>
+                <p className="text-slate-500 dark:text-slate-400 font-medium leading-relaxed">{v.desc}</p>
+              </motion.div>
+            ))}
+          </div>
 
-          {/* Module 5: 인간의 역할 */}
-          <section className="border-t border-white/5 pt-16">
-            <div className="bg-gradient-to-br from-blue-900/20 to-purple-900/20 p-10 rounded-[3rem] border border-blue-500/10">
-              <h2 className="text-3xl font-black mb-6 uppercase tracking-widest text-center">The Golden Rule</h2>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                <div className="flex gap-4">
-                  <CheckCircle2 className="text-blue-500 shrink-0" />
-                  <p className="text-gray-300">거대 시스템의 뼈대를 세우는 아키텍처 설계 능력</p>
-                </div>
-                <div className="flex gap-4">
-                  <CheckCircle2 className="text-blue-500 shrink-0" />
-                  <p className="text-gray-300">AI의 할루시네이션(Hallucination)을 관리하는 비판적 시각</p>
-                </div>
-              </div>
-            </div>
-          </section>
-        </motion.div>
+          {/* 비전 섹션 */}
+          <motion.div 
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            className="bg-slate-900 rounded-[4rem] p-16 text-center text-white relative overflow-hidden"
+          >
+            <div className="absolute inset-0 bg-gradient-to-br from-blue-600/20 to-transparent" />
+            <h2 className="text-4xl font-black mb-8 relative z-10">AI와 함께 춤추는 개발자</h2>
+            <p className="text-slate-400 text-lg leading-relaxed mb-0 relative z-10">
+              바이브 에듀는 인공지능을 경쟁자가 아닌 가장 강력한 조력자로 활용합니다. <br />
+              우리의 목표는 모든 수강생이 자신만의 '디지털 제국'을 건설하는 것입니다.
+            </p>
+          </motion.div>
+        </div>
       </main>
 
-      <footer className="py-20 border-t border-white/5 text-center text-gray-600 text-sm">
-        © 2026 VIBE_EDU. Ideas to Reality at the Speed of Vibe.
+      {/* 준비물 섹션 (Carousel) */}
+      <section className="pb-32 overflow-hidden">
+        <div className="text-center mb-16">
+          <h2 className="text-4xl font-black text-slate-900 dark:text-white">바이브 코딩을 시작하기 위한 준비물</h2>
+        </div>
+        <div className="relative flex overflow-x-hidden">
+          <motion.div 
+            animate={{ x: [0, -2618] }} // (350 width + 24 gap) * 7 images = 2618
+            transition={{ duration: 40, repeat: Infinity, ease: "linear" }} 
+            className="flex gap-6 whitespace-nowrap pl-6"
+          >
+            {[1,2,3,4,5,6,7, 1,2,3,4,5,6,7, 1,2,3,4,5,6,7].map((num, idx) => (
+              <div 
+                key={idx} 
+                onClick={() => setSelectedImage(num)}
+                className="w-[350px] shrink-0 rounded-[2rem] overflow-hidden shadow-2xl shadow-blue-100/50 dark:shadow-none border border-slate-100 dark:border-slate-800 bg-white dark:bg-slate-900 cursor-pointer hover:scale-[1.02] transition-transform"
+              >
+                <img src={`/images/vibe_coding/cardnews_0${num}.png`} alt={`Vibe Coding ${num}`} className="w-full h-auto object-cover" />
+              </div>
+            ))}
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Image Modal */}
+      <AnimatePresence>
+        {selectedImage && (
+          <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 sm:p-6">
+            <motion.div 
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setSelectedImage(null)}
+              className="absolute inset-0 bg-slate-950/80 backdrop-blur-sm cursor-pointer"
+            />
+            <motion.div 
+              initial={{ opacity: 0, scale: 0.9, y: 20 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.9, y: 20 }}
+              className="relative w-full max-w-4xl rounded-3xl overflow-hidden shadow-2xl z-10 flex flex-col max-h-[90vh]"
+            >
+              <button 
+                onClick={() => setSelectedImage(null)}
+                className="absolute top-4 right-4 w-10 h-10 rounded-full bg-black/50 hover:bg-black/80 flex items-center justify-center text-white transition-colors z-20 backdrop-blur-md"
+              >
+                <X size={20} />
+              </button>
+              <img 
+                src={`/images/vibe_coding/cardnews_0${selectedImage}.png`} 
+                alt={`Vibe Coding ${selectedImage}`} 
+                className="w-full h-auto object-contain max-h-[90vh] bg-slate-900" 
+              />
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
+
+      <footer className="py-20 text-center border-t border-gray-100">
+        <p className="text-slate-400 text-sm font-medium">© 2026 VIBE_EDU. Philosophy of Future Development.</p>
       </footer>
     </div>
   );

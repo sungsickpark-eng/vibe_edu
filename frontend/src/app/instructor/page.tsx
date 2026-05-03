@@ -1,169 +1,76 @@
 "use client";
-import { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { useRouter } from 'next/navigation';
-import { Zap, Menu, X, Award, Code2, Rocket, Heart } from 'lucide-react';
-
-/**
- * [방법 3] 경로 에러 해결을 위해 Navbar를 파일 내부에 직접 정의
- */
-function Navbar({ onNavigate }: { onNavigate: (path: string) => void }) {
-  const [isScrolled, setIsScrolled] = useState(false);
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-
-  useEffect(() => {
-    const handleScroll = () => setIsScrolled(window.scrollY > 50);
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
-  const navLinks = [
-    { name: '바이브코딩이란?', href: '/about' },
-    { name: '바이브 코딩 도구', href: '/tools' },
-    { name: '강사소개', href: '/instructor' },
-  ];
-
-  return (
-    <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-      isScrolled ? 'bg-black/80 backdrop-blur-md border-b border-white/10 py-4' : 'bg-transparent py-6'
-    }`}>
-      <div className="max-w-7xl mx-auto px-6 flex justify-between items-center">
-        <div 
-          className="text-2xl font-black tracking-tighter cursor-pointer flex items-center gap-2 text-white"
-          onClick={() => onNavigate('/')}
-        >
-          <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center">
-            <Zap size={20} fill="white" />
-          </div>
-          VIBE_EDU
-        </div>
-
-        <div className="hidden md:flex items-center gap-8 text-sm font-bold tracking-tight text-white">
-          {navLinks.map((link) => (
-            <button 
-              key={link.href} 
-              onClick={() => onNavigate(link.href)} 
-              className="text-gray-400 hover:text-white transition-colors"
-            >
-              {link.name}
-            </button>
-          ))}
-          <button 
-            onClick={() => onNavigate('/apply')}
-            className="bg-blue-600 hover:bg-blue-500 px-6 py-2.5 rounded-full text-white transition-all shadow-lg shadow-blue-600/20"
-          >
-            JOIN US
-          </button>
-        </div>
-
-        <button className="md:hidden text-white" onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}>
-          {isMobileMenuOpen ? <X size={28} /> : <Menu size={28} />}
-        </button>
-      </div>
-
-      <AnimatePresence>
-        {isMobileMenuOpen && (
-          <motion.div 
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: 'auto' }}
-            exit={{ opacity: 0, height: 0 }}
-            className="md:hidden bg-black border-b border-white/10 overflow-hidden"
-          >
-            <div className="px-6 py-8 flex flex-col gap-6 text-xl font-bold text-white">
-              {navLinks.map((link) => (
-                <button key={link.href} onClick={() => onNavigate(link.href)} className="text-left">{link.name}</button>
-              ))}
-              <button onClick={() => onNavigate('/apply')} className="text-left text-blue-500 font-black">JOIN US</button>
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </nav>
-  );
-}
+import { motion } from 'framer-motion';
+import Navbar from '@/components/Navbar';
+import { Award, Briefcase, GraduationCap, MessageCircle, Star, Zap, Users } from 'lucide-react';
 
 export default function InstructorPage() {
-  const router = useRouter();
-
-  const handleNavigate = (path: string) => {
-    router.push(path);
-  };
-
   return (
-    <div className="min-h-screen bg-[#050505] text-white selection:bg-blue-500 font-sans overflow-x-hidden">
-      <Navbar onNavigate={handleNavigate} />
-      
-      <main className="max-w-5xl mx-auto pt-48 pb-20 px-6">
-        <motion.div 
-          initial={{ opacity: 0, y: 20 }} 
-          animate={{ opacity: 1, y: 0 }}
-          className="space-y-24"
-        >
-          {/* 프로필 상단 */}
-          <section className="flex flex-col md:flex-row items-center gap-12">
-            <div className="relative group">
-              <div className="w-48 h-48 md:w-64 md:h-64 bg-gradient-to-br from-blue-600 to-purple-600 rounded-[3rem] flex items-center justify-center text-6xl font-black italic shadow-2xl">
-                V
+    <div className="min-h-screen bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-100 selection:bg-blue-100 dark:selection:bg-blue-900 font-sans">
+      <Navbar />
+
+      <main className="pt-40 pb-24 px-6">
+        <div className="max-w-5xl mx-auto">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-20 items-center mb-32">
+            <motion.div initial={{ opacity: 0, x: -30 }} animate={{ opacity: 1, x: 0 }}>
+              <div className="w-full aspect-[4/5] bg-slate-100 dark:bg-slate-900 rounded-[4rem] overflow-hidden relative group shadow-3xl dark:shadow-none border dark:border-slate-800">
+                <div className="absolute inset-0 bg-gradient-to-t from-slate-900/60 to-transparent z-10" />
+                <div className="absolute inset-0 flex items-center justify-center text-slate-200 dark:text-slate-800">
+                  <Users size={120} className="opacity-20" />
+                </div>
+                <div className="absolute bottom-12 left-12 z-20 text-white">
+                  <h2 className="text-5xl font-black mb-2">VIBE MASTER</h2>
+                  <p className="text-xl font-bold opacity-80 tracking-widest uppercase">Lead Instructor</p>
+                </div>
+                <div className="absolute top-12 right-12 z-20">
+                  <div className="w-16 h-16 bg-blue-600 rounded-2xl flex items-center justify-center shadow-2xl">
+                    <Zap size={32} fill="white" className="text-white" />
+                  </div>
+                </div>
               </div>
-              <div className="absolute -bottom-4 -right-4 bg-white text-black p-4 rounded-2xl font-bold shadow-xl rotate-6 group-hover:rotate-0 transition-transform">
-                Master
-              </div>
-            </div>
-            
-            <div className="text-center md:text-left space-y-6 flex-1">
-              <h1 className="text-5xl md:text-6xl font-black tracking-tight">
-                Vibe Coding <span className="text-blue-500 italic">Master</span>
+            </motion.div>
+
+            <motion.div initial={{ opacity: 0, x: 30 }} animate={{ opacity: 1, x: 0 }}>
+              <span className="text-blue-600 dark:text-blue-400 font-black tracking-widest uppercase mb-6 block">Instructor Profile</span>
+              <h1 className="text-6xl font-black tracking-tighter mb-10 leading-tight dark:text-white">
+                당신의 성장을 설계하는 <br />
+                실전형 마스터
               </h1>
-              <p className="text-gray-400 text-xl leading-relaxed font-light">
-                "단순한 지식 전달이 아닌, 아이디어를 현실로 만드는 <strong>압도적인 속도</strong>의 경험을 전수합니다."
+              <p className="text-slate-500 dark:text-slate-400 text-xl font-medium leading-relaxed mb-12 italic">
+                "코딩은 목적이 아닌 수단입니다. 당신의 비즈니스와 아이디어가 세상에 빛을 발할 수 있도록 가장 효율적인 길을 안내합니다."
               </p>
-              <div className="flex flex-wrap gap-3 justify-center md:justify-start">
-                {["Next.js", "FastAPI", "Supabase", "AI-X Infrastructure"].map((tag) => (
-                  <span key={tag} className="px-4 py-2 bg-white/5 border border-white/10 rounded-full text-xs font-bold uppercase tracking-wider">
-                    {tag}
-                  </span>
+              
+              <div className="space-y-8">
+                {[
+                  { icon: <Award />, text: "글로벌 IT 기업 프로젝트 총괄 15년" },
+                  { icon: <Briefcase />, text: "AI 에이전트 기반 자동화 시스템 빌더" },
+                  { icon: <GraduationCap />, text: "3,000명 이상의 비전공자 기술 멘토링" },
+                  { icon: <MessageCircle />, text: "1:1 밀착 코칭 및 커리어 설계 전문가" }
+                ].map((item, i) => (
+                  <div key={i} className="flex items-center gap-6 group">
+                    <div className="w-12 h-12 rounded-xl bg-blue-50 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 flex items-center justify-center group-hover:bg-blue-600 dark:group-hover:bg-blue-500 group-hover:text-white transition-all">
+                      {item.icon}
+                    </div>
+                    <span className="text-lg font-bold text-slate-700 dark:text-slate-300">{item.text}</span>
+                  </div>
                 ))}
               </div>
-            </div>
-          </section>
+            </motion.div>
+          </div>
 
-          {/* 실무 프로젝트 경험 (Module 1, 4 기반) */}
-          <section className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            <div className="p-10 bg-[#111] rounded-[3rem] border border-white/5 space-y-4">
-              <Rocket className="text-blue-500 mb-2" size={32} />
-              <h3 className="text-2xl font-bold italic tracking-tight">Fam-Log</h3>
-              <p className="text-gray-400 leading-relaxed">
-                가족 공유 히스토리 웹앱을 바이브 코딩으로 단기간에 구축했습니다. 
-                UI 설계부터 데이터베이스 연동까지, AI 에이전트를 지휘하여 상용 수준의 서비스를 만드는 워크플로우의 정수입니다.
-              </p>
+          <div className="bg-slate-50 dark:bg-slate-900 rounded-[3rem] p-16 border border-slate-100 dark:border-slate-800 relative overflow-hidden">
+            <div className="relative z-10 flex flex-col md:flex-row justify-between items-center gap-12 text-center md:text-left">
+              <div>
+                <h3 className="text-3xl font-black mb-4 tracking-tight dark:text-white">강사에게 직접 상담하기</h3>
+                <p className="text-slate-500 dark:text-slate-400 font-bold">궁금한 점이 있다면 언제든 편하게 물어보세요.</p>
+              </div>
+              <button className="bg-slate-900 dark:bg-blue-600 text-white px-10 py-5 rounded-2xl font-black text-xl hover:bg-blue-600 dark:hover:bg-white dark:hover:text-blue-600 transition-all shadow-xl active:scale-95 flex items-center gap-3 shrink-0">
+                카카오톡 문의하기 <Star size={24} fill="currentColor" />
+              </button>
             </div>
-            <div className="p-10 bg-[#111] rounded-[3rem] border border-white/5 space-y-4">
-              <Award className="text-purple-500 mb-2" size={32} />
-              <h3 className="text-2xl font-bold italic tracking-tight">AI-X Smart Infra</h3>
-              <p className="text-gray-400 leading-relaxed">
-                컴퓨터 비전과 열화상 센서를 결합한 능동형 보안 시스템을 설계했습니다. 
-                복잡한 하드웨어 통합과 데이터 시각화라는 난제를 바이브 코딩으로 해결한 실전 사례를 공유합니다.
-              </p>
-            </div>
-          </section>
-
-          {/* 강의 철학 (Tip 섹션 기반) */}
-          <section className="bg-gradient-to-r from-blue-900/20 via-black to-purple-900/20 p-12 rounded-[4rem] border border-white/5">
-            <div className="max-w-3xl mx-auto text-center space-y-8">
-              <Heart className="mx-auto text-pink-500" size={40} />
-              <h2 className="text-3xl font-bold">"내가 겪은 에러" 세션</h2>
-              <p className="text-gray-400 text-lg leading-relaxed">
-                AI가 해결하지 못한 특정 버그(예: LightGBM 설치 이슈 등)를 인간의 의도로 어떻게 풀어냈는지 직접 보여드립니다. 
-                환경 설정 실패를 원천 방지하는 가이드북과 마법의 프롬프트를 통해, 여러분의 시간 낭비를 0으로 줄여드립니다.
-              </p>
-            </div>
-          </section>
-        </motion.div>
+            <div className="absolute top-0 right-0 w-64 h-64 bg-blue-100 dark:bg-blue-900/10 rounded-full blur-[100px] opacity-30 -z-0" />
+          </div>
+        </div>
       </main>
-
-      <footer className="py-20 border-t border-white/5 text-center text-gray-600 text-sm">
-        © 2026 VIBE_EDU. Ideas to Reality at the Speed of Vibe.
-      </footer>
     </div>
   );
 }

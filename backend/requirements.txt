@@ -12,3 +12,10 @@ starlette==1.0.0
 typing-inspection==0.4.2
 typing_extensions==4.15.0
 uvicorn==0.46.0
+SQLAlchemy==2.0.43
+PyMySQL==1.1.1
+passlib[bcrypt]==1.7.4
+python-jose==3.3.0
+Markdown==3.7
+reportlab==4.4.1
+playwright==1.54.0

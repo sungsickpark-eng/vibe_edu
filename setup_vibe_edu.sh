@@ -11,8 +11,7 @@ echo "🚀 [$PROJECT_NAME] 프로젝트 구성을 시작합니다..."
 echo "📂 백엔드 설정 중..."
 mkdir backend
 cd backend
-python3 -m venv venv
-source venv/bin/activate
+conda activate vibe_edu
 pip install fastapi uvicorn python-multipart
 
 # 기본 main.py 생성
